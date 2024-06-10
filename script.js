@@ -13,11 +13,11 @@ function closeCard(event, button) {
 }
 
 function updateData() {
-    document.getElementById('temperature').innerText = '26°C';
-    document.getElementById('pressure').innerText = '1015 hPa';
-    document.getElementById('humidity').innerText = '55%';
-    document.getElementById('gas').innerText = 'Moderate';
-    document.getElementById('altitude').innerText = '1520 m';
+    document.getElementById('temperature').innerText = '/ *C';
+    document.getElementById('pressure').innerText = '/ hPa';
+    document.getElementById('humidity').innerText = '/ %';
+    document.getElementById('gas').innerText = '/ kOhms';
+    document.getElementById('altitude').innerText = '/ m';
 }
 
 setTimeout(updateData, 5000);

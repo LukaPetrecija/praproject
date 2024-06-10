@@ -7,12 +7,11 @@ function zoomCard(card) {
 }
 
 function closeCard(event, button) {
-    event.stopPropagation();  // Prevent triggering the zoomCard function
+    event.stopPropagation();
     const card = button.parentElement;
     card.classList.remove('zoomed');
 }
 
-// Mock data update function
 function updateData() {
     document.getElementById('temperature').innerText = '26°C';
     document.getElementById('pressure').innerText = '1015 hPa';
@@ -21,7 +20,6 @@ function updateData() {
     document.getElementById('altitude').innerText = '1520 m';
 }
 
-// Simulate data update after 5 seconds
 setTimeout(updateData, 5000);
 
 function zoomCard(card) {
@@ -33,19 +31,17 @@ function zoomCard(card) {
 }
 
 function closeCard(event, button) {
-    event.stopPropagation();  // Prevent triggering the zoomCard function
+    event.stopPropagation(); 
     const card = button.parentElement;
     card.classList.remove('zoomed');
 }
 
 const options = {
-    username: 'praalgebra',  // Replace with your MQTT username
-    password: 'h1sXSluD0OUMAZpv'   // Replace with your MQTT password
+    username: 'praalgebra',  
+    password: 'h1sXSluD0OUMAZpv' 
 };
 
-// MQTT connection
-const client = mqtt.connect('wss://praalgebra.cloud.shiftr.io:443/', options); // Replace with your MQTT broker URL and port
-
+const client = mqtt.connect('wss://praalgebra.cloud.shiftr.io:443/', options); 
 client.on('connect', function () {
     console.log('Connected to MQTT broker');
     client.subscribe('outTopic');
@@ -53,7 +49,7 @@ client.on('connect', function () {
 
 client.on('message', function (topic, message) {
     const value = message.toString();
-    console.log(value);  // Debug logging
+    console.log(value);
     if (topic === 'temp') {
         document.getElementById('outTopic').innerText = value + '°C';
     }

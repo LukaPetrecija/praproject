@@ -37,7 +37,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    padding: 20px;
+    padding: 15px;
     text-align: center;
     cursor: pointer;
     position: relative;
@@ -102,13 +102,49 @@ body {
     display: flex;
 }
 
+@media (max-width: 1200px) {
+    .container {
+        gap: 30px;
+    }
+
+    .card{
+        padding: 2.4rem;
+    }
+
+    .card h2 {
+        font-size: 2.4rem;
+    }
+
+    .card p {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .container {
+        gap: 30px;
+    }
+
+    .card{
+        padding: 2.2rem;
+    }
+
+    .card h2 {
+        font-size: 2.2rem;
+    }
+
+    .card p {
+        font-size: 2rem;
+    }
+}
+
 @media (max-width: 768px) {
     .card h2 {
         font-size: 2rem;
     }
 
     .card p {
-        font-size: 1.2rem;
+        font-size: 1.6rem;
     }
 }
 
@@ -118,14 +154,14 @@ body {
     }
 
     .card {
-        padding: 15px;
+        padding: 10px;
     }
 
     .card h2 {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
 
     .card p {
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
 }

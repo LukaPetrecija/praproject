@@ -6,33 +6,34 @@
     <title>Weather Station</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<div class="container">
-    <div class="card" onclick="zoomCard(this)">
-        <button class="close-btn" onclick="closeCard(event, this)">X</button>
-        <h2>Temperature</h2>
-        <p id="temperature">25°C</p>
+<body>
+    <div class="container">
+        <div class="card" onclick="zoomCard(this)">
+            <button class="close-btn" onclick="closeCard(event, this)">X</button>
+            <h2>Temperatura</h2>
+            <p id="temperature">25°C</p>
+        </div>
+        <div class="card" onclick="zoomCard(this)">
+            <button class="close-btn" onclick="closeCard(event, this)">X</button>
+            <h2>Tlak zraka</h2>
+            <p id="pressure">1013 hPa</p>
+        </div>
+        <div class="card" onclick="zoomCard(this)">
+            <button class="close-btn" onclick="closeCard(event, this)">X</button>
+            <h2>Vlažnost zraka</h2>
+            <p id="humidity">60%</p>
+        </div>
+        <div class="card" onclick="zoomCard(this)">
+            <button class="close-btn" onclick="closeCard(event, this)">X</button>
+            <h2>Kvaliteta zraka</h2>
+            <p id="gas">Good</p>
+        </div>
+        <div class="card" onclick="zoomCard(this)">
+            <button class="close-btn" onclick="closeCard(event, this)">X</button>
+            <h2>Približna nadmorska visina</h2>
+            <p id="altitude">1500 m</p>
+        </div>
     </div>
-    <div class="card" onclick="zoomCard(this)">
-        <button class="close-btn" onclick="closeCard(event, this)">X</button>
-        <h2>Pressure</h2>
-        <p id="pressure">1013 hPa</p>
-    </div>
-    <div class="card" onclick="zoomCard(this)">
-        <button class="close-btn" onclick="closeCard(event, this)">X</button>
-        <h2>Humidity</h2>
-        <p id="humidity">60%</p>
-    </div>
-    <div class="card" onclick="zoomCard(this)">
-        <button class="close-btn" onclick="closeCard(event, this)">X</button>
-        <h2>Gas</h2>
-        <p id="gas">Good</p>
-    </div>
-    <div class="card" onclick="zoomCard(this)">
-        <button class="close-btn" onclick="closeCard(event, this)">X</button>
-        <h2>Approx. Altitude</h2>
-        <p id="altitude">1500 m</p>
-    </div>
-</div>
     <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script> 
     <script src="script.js"></script>
 </body>

@@ -2,15 +2,34 @@ function zoomCard(card) {
     const zoomed = document.querySelector('.zoomed');
     if (zoomed) {
         zoomed.classList.remove('zoomed');
+        document.querySelectorAll('.card').forEach(c => c.classList.remove('blur'));
     }
     card.classList.add('zoomed');
+    document.getElementById('overlay').classList.add('visible');
+    document.querySelectorAll('.card').forEach(c => {
+        if (c !== card) {
+            c.classList.add('blur');
+        }
+    });
 }
 
 function closeCard(event, button) {
     event.stopPropagation();
     const card = button.parentElement;
     card.classList.remove('zoomed');
+    document.getElementById('overlay').classList.remove('visible');
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('blur'));
 }
+
+function closeZoomedCard() {
+    const zoomed = document.querySelector('.zoomed');
+    if (zoomed) {
+        zoomed.classList.remove('zoomed');
+    }
+    document.getElementById('overlay').classList.remove('visible');
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('blur'));
+}
+
 
 function updateData() {
     document.getElementById('temperature').innerText = '/ *C';
@@ -21,20 +40,6 @@ function updateData() {
 }
 
 setTimeout(updateData, 5000);
-
-function zoomCard(card) {
-    const zoomed = document.querySelector('.zoomed');
-    if (zoomed) {
-        zoomed.classList.remove('zoomed');
-    }
-    card.classList.add('zoomed');
-}
-
-function closeCard(event, button) {
-    event.stopPropagation(); 
-    const card = button.parentElement;
-    card.classList.remove('zoomed');
-}
 
 const options = {
     username: 'praalgebra',  
@@ -50,22 +55,18 @@ client.on('connect', function () {
 client.on('message', function (topic, message) {
     const value = message.toString();
     console.log(value);
-    if (topic === 'temp') {
-        document.getElementById('outTopic').innerText = value + '°C';
-    }
-
     const lines = value.split('\n');
-            lines.forEach(line => {
-                if (line.includes('Temperature')) {
-                    document.getElementById('temperature').innerText = line.split('=')[1].trim();
-                } else if (line.includes('Pressure')) {
-                    document.getElementById('pressure').innerText = line.split('=')[1].trim();
-                } else if (line.includes('Humidity')) {
-                    document.getElementById('humidity').innerText = line.split('=')[1].trim();
-                } else if (line.includes('Gas')) {
-                    document.getElementById('gas').innerText = line.split('=')[1].trim();
-                } else if (line.includes('Approx. Altitude')) {
-                    document.getElementById('altitude').innerText = line.split('=')[1].trim();
-                }
-            });
-        });
+    lines.forEach(line => {
+        if (line.includes('Temperature')) {
+            document.getElementById('temperature').innerText = line.split('=')[1].trim();
+        } else if (line.includes('Pressure')) {
+            document.getElementById('pressure').innerText = line.split('=')[1].trim();
+        } else if (line.includes('Humidity')) {
+            document.getElementById('humidity').innerText = line.split('=')[1].trim();
+        } else if (line.includes('Gas')) {
+            document.getElementById('gas').innerText = line.split('=')[1].trim();
+        } else if (line.includes('Approx. Altitude')) {
+            document.getElementById('altitude').innerText = line.split('=')[1].trim();
+        }
+    });
+});

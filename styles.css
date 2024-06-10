@@ -101,3 +101,31 @@ body {
 .card.zoomed .close-btn {
     display: flex;
 }
+
+@media (max-width: 768px) {
+    .card h2 {
+        font-size: 2rem;
+    }
+
+    .card p {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        gap: 10px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .card h2 {
+        font-size: 1.5rem;
+    }
+
+    .card p {
+        font-size: 1rem;
+    }
+}

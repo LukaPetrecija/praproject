@@ -1,15 +1,16 @@
 body {
     font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     margin: 0;
     background: linear-gradient(270deg, #cb1121, #ff7e5f, #feb47b, #86a8e7, #2575fc, #6a11cb, #cb1121);
     background-size: 1400% 1400%;
     animation: gradient 20s ease-in-out infinite;
-    overflow: hidden;
-    flex-direction: column;
+    overflow-x: hidden;
+}
+
+h1{
+    color: white;
+    text-align: center;
+    margin-top: 20px;
 }
 
 @keyframes gradient {
@@ -26,15 +27,13 @@ body {
     100% { background-position: 100% 50%; }
 }
 
-footer {
-    background-color: rgba(248, 249, 250, 0.8);
-    color: #212529;
+.signatures {
+    font-size: 20px;
+    color: white;
     text-align: center;
     padding: 10px;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
+    max-width: none;
+    margin-top:  10px;
 }
 
 .container {
@@ -43,6 +42,7 @@ footer {
     gap: 20px;
     width: 80%;
     max-width: 500px;
+    margin: 20px auto; 
     animation: fadeIn 2s ease;
 }
 
@@ -62,7 +62,6 @@ footer {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s, visibility 0.3s;
-    z-index: 998;
 }
 
 .overlay.visible {
@@ -81,7 +80,7 @@ footer {
     position: relative;
     opacity: 0;
     animation: slideIn 0.5s ease forwards;
-    z-index: 999;
+    z-index: 1;
 }
 
 .card.blur {

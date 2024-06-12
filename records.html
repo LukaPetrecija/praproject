@@ -9,29 +9,41 @@
 </head>
 
 <body>
-    <a href="records.html" class="btnRecords">Statistika</a>
+    <a href="index.html" class="btnIndex">Početna</a>
     <h1>Marx Weather Station</h1>
     <div id="overlay" class="overlay" onclick="closeZoomedCard()"></div>
     <div class="container">
         <div class="card" onclick="zoomCard(this)">
             <button class="close-btn" onclick="closeCard(event, this)">X</button>
-            <h2>Temperatura</h2>
-            <p id="temperature">/ *C</p>
+            <h2>Najniža temperatura</h2>
+            <p id="minTemperature">/ *C</p>
+            <br>
+            <h2>Najviša temperatura</h2>
+            <p id="maxTemperature">/ *C</p>
         </div>
         <div class="card" onclick="zoomCard(this)">
             <button class="close-btn" onclick="closeCard(event, this)">X</button>
-            <h2>Tlak zraka</h2>
-            <p id="pressure">/ hPa</p>
+            <h2>Najniži tlak zraka</h2>
+            <p id="minPressure">/ hPa</p>
+            <br>
+            <h2>Najviši tlak zraka</h2>
+            <p id="maxPressure">/ hPa</p>
         </div>
         <div class="card" onclick="zoomCard(this)">
             <button class="close-btn" onclick="closeCard(event, this)">X</button>
-            <h2>Vlažnost zraka</h2>
-            <p id="humidity">/ %</p>
+            <h2>Najniža vlažnost zraka</h2>
+            <p id="minHumidity">/ %</p>
+            <br>
+            <h2>Najviša vlažnost zraka</h2>
+            <p id="maxHumidity">/ %</p>
         </div>
         <div class="card" onclick="zoomCard(this)">
             <button class="close-btn" onclick="closeCard(event, this)">X</button>
-            <h2>Kvaliteta zraka</h2>
-            <p id="gas">/ kOhms</p>
+            <h2>Najniža kvaliteta zraka</h2>
+            <p id="minGas">/ kOhms</p>
+            <br>
+            <h2>Najviša kvaliteta zraka</h2>
+            <p id="maxGas">/ kOhms</p>
         </div>
         <div class="card" onclick="zoomCard(this)">
             <button class="close-btn" onclick="closeCard(event, this)">X</button>

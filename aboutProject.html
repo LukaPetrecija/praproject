@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Station</title>
+    <link rel="stylesheet" href="aboutProject.css" />
+  </head>
+
+  <body>
+    <a
+      href="index.html"
+      class="card"
+      style="text-decoration: none; color: black"
+      >Početna</a
+    >
+    <a
+      href="records.html"
+      class="card"
+      style="text-decoration: none; color: black"
+      >Statistika</a
+    >
+    <h1>Marx Weather Station</h1>
+
+    <div id="overlay" class="overlay" onclick="closeZoomedCard()"></div>
+    <div class="container">
+        <div class="card" onclick="zoomCard(this)">
+            <button class="close-btn" onclick="closeCard(event, this)">X</button>
+            <h2>Cilj Projekta</h2>
+            <p>Cilj ovog projekta je korištenje ESP-32 mikroupravljača zajedno sa senzorima za mjerenje vlage,
+                temperature, tlaka, kvalitete zraka i nadmorske visine kako bi se dizajnirala vremenska stanica. ESP-32
+                mikroupravljač, koji omogućava bežično povezivanje na internet, prikupljene podatke šalje na vanjski
+                poslužitelj putem MQTT protokola. Poslužitelj potom prosljeđuje te informacije na web stranicu koja služi
+                kao korisnički prikaz vremenskih podataka.</p>
+        </div>
+        <div class="card" onclick="zoomCard(this)">
+            <button class="close-btn" onclick="closeCard(event, this)">X</button>
+            <h2>Opseg projekta</h2>
+            <p>Ovaj projekt obuhvaća nekoliko ključnih aktivnosti: povezivanje i testiranje ESP-32 mikroupravljača te
+                senzora za mjerenje vlage, temperature, tlaka, kvalitete zraka i nadmorske visine; razvoj koda za
+                mikroupravljač; konfiguraciju servisa za obradu podataka; dizajn web stranice te razvoj koda koji
+                omogućuje dohvaćanje podataka s servisa za prikaz na web stranici.
+                </p>
+        </div>
+        <div class="card" onclick="zoomCard(this)">
+            <button class="close-btn" onclick="closeCard(event, this)">X</button>
+            <h2>Bitni pojmovi projekta</h2>
+            <ul>
+                <li>ESP-32 mikro upravljač</li>
+                <li>Senzor vlage, temperature, tlaka, kvalitete zraka i nadmorske visine</li>
+                <li>Servis (MQTT)</li>
+                <li>Rješenje za dohvaćanje podataka</li>
+                <li>Web stranica</li>
+            </ul>
+        </div>
+        <div class="card" onclick="zoomCard(this)">
+            <button class="close-btn" onclick="closeCard(event, this)">X</button>
+            <h2>Zahtjevi projekta</h2>
+            <ul>
+                <li>Stanica prikazuje razne vrste podataka o vremenu</li>
+                <li>Web stranica mora biti moderno dizajnirana</li>
+                <li>Web stranica mora biti jednostavna</li>
+                <li>Mikroupravljač šalje podatke servisu a potom ih zahtjeva web stranica od servisa</li>
+            </ul>
+        </div>
+    </div>
+
+    <p class="signatures">
+      Luka Petrečija, Leo Brčina, Patrik Perčinić, Tin Cik
+    </p>
+
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

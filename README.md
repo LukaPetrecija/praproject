@@ -1,4 +1,4 @@
-# Arduino BME680 Sensor Data Monitoring Project
+# Arduino Weather Station Project
 
 This project involves using an Arduino with a BME680 sensor to collect environmental data and publish it via MQTT. The data is displayed in real-time on a website.
 

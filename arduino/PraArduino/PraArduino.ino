@@ -12,8 +12,8 @@ Built for the purposes of PRA course.
 
 Adafruit_BME680 bme;
 
-const char* ssid = "Patrik";
-const char* password = "qwertqwerty";
+const char* ssid = "Algebra-HotSpot";
+const char* password = "";
 const char* mqtt_server = "praalgebra.cloud.shiftr.io";
 const String mqtt_user = "praalgebra";
 const String mqtt_password = "h1sXSluD0OUMAZpv";
@@ -23,18 +23,20 @@ PubSubClient client(espClient);
 unsigned long lastMsg = 0;
 #define MSG_BUFFER_SIZE (200)
 char msg[MSG_BUFFER_SIZE];
-int value = 0;
 
 #define SEALEVELPRESSURE_HPA (1013.25)
 
-float temperature = 20.0;
-float pressure = 1013.25;
-float humidity = 50.0;
-float gas_resistance = 100.0;
-float altitude = 100.0;
+// Variables to store the min and max values
+float minTemperature = 1000.0;
+float maxTemperature = -1000.0;
+float minPressure = 10000.0;
+float maxPressure = 0.0;
+float minHumidity = 100.0;
+float maxHumidity = 0.0;
+float minGas = 10000.0;
+float maxGas = 0.0;
 
 void setup_wifi() {
-
   delay(10);
   Serial.println();
   Serial.print("Connecting to ");
@@ -55,7 +57,6 @@ void setup_wifi() {
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
 }
-
 
 void reconnect() {
   // Loop until we're reconnected
@@ -86,18 +87,18 @@ void setup() {
   setup_wifi();
   client.setServer(mqtt_server, 1883);
 
-  // if (!bme.begin()) {
-  //   Serial.println("Could not find a valid BME680 sensor, check wiring!");
-  //   while (1)
-  //     ;
-  // }
+  if (!bme.begin()) {
+    Serial.println("Could not find a valid BME680 sensor, check wiring!");
+    while (1)
+      ;
+  }
 
-  // // Set up oversampling and filter initialization
-  // bme.setTemperatureOversampling(BME680_OS_8X);
-  // bme.setHumidityOversampling(BME680_OS_2X);
-  // bme.setPressureOversampling(BME680_OS_4X);
-  // bme.setIIRFilterSize(BME680_FILTER_SIZE_3);
-  // bme.setGasHeater(320, 150);  // 320*C for 150 ms
+  // Set up oversampling and filter initialization
+  bme.setTemperatureOversampling(BME680_OS_8X);
+  bme.setHumidityOversampling(BME680_OS_2X);
+  bme.setPressureOversampling(BME680_OS_4X);
+  bme.setIIRFilterSize(BME680_FILTER_SIZE_3);
+  bme.setGasHeater(320, 150);  // 320*C for 150 ms
 }
 
 void loop() {
@@ -110,27 +111,42 @@ void loop() {
   if (now - lastMsg > 2000) {
     lastMsg = now;
 
-    // if (!bme.performReading()) {
-    //   Serial.println("Failed to perform reading :(");
-    //   return;
-    // }
+    if (!bme.performReading()) {
+      Serial.println("Failed to perform reading :(");
+      return;
+    }
 
-    temperature += random(-10, 10) * 0.1;
-    pressure += random(-100, 100) * 0.01;
-    humidity += random(-50, 50) * 0.1;
-    gas_resistance += random(-100, 100) * 0.1;
-    altitude += random(-5, 5) * 0.1;
+    float temperature = bme.temperature;
+    float pressure = bme.pressure / 100.0;
+    float humidity = bme.humidity;
+    float gas = bme.gas_resistance / 1000.0;
+    float altitude = bme.readAltitude(SEALEVELPRESSURE_HPA);
+
+    // Update min and max values
+    if (temperature < minTemperature) minTemperature = temperature;
+    if (temperature > maxTemperature) maxTemperature = temperature;
+    if (pressure < minPressure) minPressure = pressure;
+    if (pressure > maxPressure) maxPressure = pressure;
+    if (humidity < minHumidity) minHumidity = humidity;
+    if (humidity > maxHumidity) maxHumidity = humidity;
+    if (gas < minGas) minGas = gas;
+    if (gas > maxGas) maxGas = gas;
 
     snprintf(msg, MSG_BUFFER_SIZE,
-             "Temperature = %.1f *C\nPressure = %.2f hPa\nHumidity = %.1f %%\nGas = %.1f KOhms\nApprox. Altitude = %.1f m",
-             temperature,
-             pressure,
-             humidity,
-             gas_resistance,
-             altitude);
+             "Temperature = %.2f *C\nPressure = %.2f hPa\nHumidity = %.2f %%\nGas = %.2f KOhms\nApprox. Altitude = %.2f m",
+             temperature, pressure, humidity, gas, altitude);
 
     Serial.print("Publish message: ");
     Serial.println(msg);
     client.publish("outTopic", msg);
+
+    // Publish statistics
+    snprintf(msg, MSG_BUFFER_SIZE,
+             "Min Temperature = %.2f *C\nMax Temperature = %.2f *C\nMin Pressure = %.2f hPa\nMax Pressure = %.2f hPa\nMin Humidity = %.2f %%\nMax Humidity = %.2f %%\nMin Gas = %.2f KOhms\nMax Gas = %.2f KOhms",
+             minTemperature, maxTemperature, minPressure, maxPressure, minHumidity, maxHumidity, minGas, maxGas);
+
+    Serial.print("Publish stats: ");
+    Serial.println(msg);
+    client.publish("statsTopic", msg);
   }
 }

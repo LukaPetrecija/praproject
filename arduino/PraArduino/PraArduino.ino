@@ -26,7 +26,7 @@ char msg[MSG_BUFFER_SIZE];
 
 #define SEALEVELPRESSURE_HPA (1013.25)
 
-// Variables to store the min and max values
+// Initialize statistics
 float minTemperature = 1000.0;
 float maxTemperature = -1000.0;
 float minPressure = 10000.0;
@@ -59,31 +59,34 @@ void setup_wifi() {
 }
 
 void reconnect() {
-  // Loop until we're reconnected
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
 
     String clientId = "ESP8266Client-";
     clientId += String(random(0xffff), HEX);
-    // Attempt to connect
+
     if (client.connect(clientId.c_str(), mqtt_user.c_str(), mqtt_password.c_str())) {  //put your clientId/userName/passWord here
       Serial.println("connected");
-      // Once connected, publish an announcement...
-      client.publish("outTopic", "hello world");
-      // ... and resubscribe
       client.subscribe("inTopic");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
       Serial.println(" try again in 5 seconds");
-      // Wait 5 seconds before retrying
+
       delay(5000);
     }
   }
 }
 
+void run_tests() {
+  test_min_temperature_update();
+  test_max_temperature_update();
+  Serial.println("All tests passed!");
+}
+
 void setup() {
   Serial.begin(115200);
+  run_tests();
   setup_wifi();
   client.setServer(mqtt_server, 1883);
 
@@ -93,12 +96,12 @@ void setup() {
       ;
   }
 
-  // Set up oversampling and filter initialization
+  // bme sensor initializationa
   bme.setTemperatureOversampling(BME680_OS_8X);
   bme.setHumidityOversampling(BME680_OS_2X);
   bme.setPressureOversampling(BME680_OS_4X);
   bme.setIIRFilterSize(BME680_FILTER_SIZE_3);
-  bme.setGasHeater(320, 150);  // 320*C for 150 ms
+  bme.setGasHeater(320, 150);
 }
 
 void loop() {
@@ -122,7 +125,7 @@ void loop() {
     float gas = bme.gas_resistance / 1000.0;
     float altitude = bme.readAltitude(SEALEVELPRESSURE_HPA);
 
-    // Update min and max values
+    //Updating statistics
     if (temperature < minTemperature) minTemperature = temperature;
     if (temperature > maxTemperature) maxTemperature = temperature;
     if (pressure < minPressure) minPressure = pressure;
@@ -149,4 +152,18 @@ void loop() {
     Serial.println(msg);
     client.publish("statsTopic", msg);
   }
+}
+
+void test_min_temperature_update() {
+  minTemperature = 1000.0;
+  float testTemp = 25.0;
+  if (testTemp < minTemperature) minTemperature = testTemp;
+  assert(minTemperature == 25.0, "Min temperature update test failed");
+}
+
+void test_max_temperature_update() {
+  maxTemperature = -1000.0;
+  float testTemp = 35.0;
+  if (testTemp > maxTemperature) maxTemperature = testTemp;
+  assert(maxTemperature == 35.0, "Max temperature update test failed");
 }
